@@ -1,0 +1,4 @@
+node_modules
+.env
+yarn.lock
+__tests__/coverage
