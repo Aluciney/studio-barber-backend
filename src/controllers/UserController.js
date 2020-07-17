@@ -44,7 +44,11 @@ module.exports = {
             const { id } = req.params;
             const _user = await user.findByPk(id);
             if (_user) {
-                _user.update(req.body);
+                const user_update = req.body;
+                if(req.file){
+                    user_update.avatar_url = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+                }
+                _user.update(user_update);
                 return res.json(_user);
             }
             return res.status(404).json({ error: `Usuário não encontrado.` });
