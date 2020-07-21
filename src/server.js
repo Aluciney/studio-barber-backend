@@ -6,6 +6,7 @@ const cors = require('cors');
 const http = require('http');
 const socketIO = require('socket.io');
 const routes = require('./routes');
+const SocketController = require('./controllers/SocketController');
 const app = express();
 
 app.use(cors());
@@ -21,10 +22,6 @@ app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 const server = http.createServer(app);
 const io = socketIO(server);
 
-io.on('connection', socket => {
-    socket.on('disconnect', () => {
-
-    });
-});
+io.on('connection', SocketController.respond );
 
 server.listen(process.env.PORT || 3001);

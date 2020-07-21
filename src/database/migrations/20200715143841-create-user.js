@@ -25,6 +25,14 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
+            expo_id: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            socket_id: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
