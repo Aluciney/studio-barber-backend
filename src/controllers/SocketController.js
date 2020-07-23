@@ -3,13 +3,13 @@ const { user } = require('../app/models');
 module.exports.respond = function (socket) {
     
     const { _query } = socket.request;
-    if(_query.user_id){
+    if(_query.id_user){
         try {
-            const user_id = parseInt(_query.user_id);
+            const id_user = parseInt(_query.id_user);
             async function setSocketId(){
-                const _user = await user.findByPk(user_id);
+                const _user = await user.findByPk(id_user);
                 _user.update({
-                    socket_id: socket.id
+                    id_socket: socket.id
                 });
             }
             setSocketId();

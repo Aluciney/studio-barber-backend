@@ -59,8 +59,10 @@ module.exports = {
 
     async destroy(req, res) {
         try {
-            const _user = await user.findByPk(req.res.userId);
+            const { id } = req.params;
+            const _user = await user.findByPk(id);
             await _user.destroy();
+            
             return res.send();
         } catch (error) {
             return res.status(404).json({ error: `Erro ao deletar usuario. Erro: ${error}` });
