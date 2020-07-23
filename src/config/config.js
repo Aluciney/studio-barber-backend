@@ -20,11 +20,17 @@ module.exports = {
     },
     production: {
         username: process.env.DB_USER,
-        password: process.env.DB_USER,
-        database: process.env.DB_USER,
-        host: process.env.DB_USER,
-        dialect: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        dialect: process.env.DB_DIALECT,
         define: { freezeTableName: true },
         logging: false,
+        dialectOptions: {
+            ssl: {
+                require: false,
+                rejectUnauthorized: false,
+            }
+        },
     }
 }
