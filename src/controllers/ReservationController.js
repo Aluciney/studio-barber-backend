@@ -1,4 +1,6 @@
-const { reservation } = require('../app/models');
+const { reservation, reservation_time } = require('../app/models');
+
+const Sequelize = require('sequelize')
 
 module.exports = {
     async index(req, res) {
@@ -18,11 +20,26 @@ module.exports = {
     },
 
     async store(req, res) {
+        const transaction = Sequelize.Transaction();
         try {
-            const _reservation = await reservation.create(req.body);
+            const { date, note, time } = req.body;
 
+            const reservations = await reservation.findAll({ 
+                where: { date },
+                include: [ reservation_time ] 
+            });
+
+            if(reservations.length > 0){
+                return res.status(404).json({ error: `Esta ` });
+            }
+
+            const _reservation = await reservation.create(req.body,{ transaction });
+
+            
+            transaction.commit();
             return res.status(201).json(_reservation);
         } catch (error) {
+            transaction.rollback();
             return res.status(404).json({ error: `Erro ao cadastrar reserva. Erro: ${error}` });
         }
     },

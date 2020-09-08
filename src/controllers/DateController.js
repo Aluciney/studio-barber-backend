@@ -53,7 +53,10 @@ module.exports = {
 
         times.map(time_ => {
             var time_formated = moment(time_.time, ['HH:mm']).format('hh:mm A');
-            new_times.push(time_formated);
+            new_times.push({
+                id: time_.id,
+                name: time_formated,
+            });
         });
 
         times_disabled.map(time_ => {
@@ -63,7 +66,10 @@ module.exports = {
 
         times_busy.map(time_ => {
             var time_formated = moment(time_.time.time, ['HH:mm']).format('hh:mm A');
-            new_times_busy.push(time_formated);
+            new_times_busy.push({
+                id: time_.id,
+                name: time_formated,
+            });
         });
 
         const data = {
