@@ -1,25 +1,32 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('service', {
+        await queryInterface.createTable('reservation_time', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            name: {
+            id_reservation: {
                 allowNull: false,
-                type: Sequelize.STRING(50)
+                type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'reservation',
+                    key: 'id',
+                }
             },
-            image_url: {
+            id_time: {
                 allowNull: false,
-                type: Sequelize.STRING
-            },
-            active: {
-                allowNull: false,
-                type: Sequelize.BOOLEAN,
-                defaultValue: true,
+                type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'time',
+                    key: 'id',
+                }
             },
             createdAt: {
                 allowNull: false,
@@ -32,6 +39,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('service');
+        await queryInterface.dropTable('reservation_time');
     }
 };

@@ -1,25 +1,26 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('service', {
+        await queryInterface.createTable('time_date_disabled', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            name: {
+            id_time: {
                 allowNull: false,
-                type: Sequelize.STRING(50)
+                type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'time',
+                    key: 'id',
+                }
             },
-            image_url: {
+            date: {
                 allowNull: false,
-                type: Sequelize.STRING
-            },
-            active: {
-                allowNull: false,
-                type: Sequelize.BOOLEAN,
-                defaultValue: true,
+                type: Sequelize.DATEONLY
             },
             createdAt: {
                 allowNull: false,
@@ -32,6 +33,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('service');
+        await queryInterface.dropTable('time_date_disabled');
     }
 };

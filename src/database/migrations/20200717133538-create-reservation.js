@@ -22,10 +22,6 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATEONLY
             },
-            time: {
-                allowNull: false,
-                type: Sequelize.TIME
-            },
             note: {
                 allowNull: true,
                 type: Sequelize.STRING

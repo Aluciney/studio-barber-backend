@@ -19,7 +19,15 @@ module.exports = {
 
     async store(req, res) {
         try {
-            const _service = await service.create(req.body);
+            const _service_data = req.body;
+            
+            if(!req.file){
+                return res.status(404).json({ error: `Erro ao cadastrar serviço. É obrigatório o envio da imagem.` });
+            }
+
+            _service_data.image_url = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+
+            const _service = await service.create(_service_data);
 
             return res.status(201).json(_service);
         } catch (error) {

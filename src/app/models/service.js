@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     };
     Service.init({
         name: DataTypes.STRING(50),
+        image_url: DataTypes.STRING,
         active: DataTypes.BOOLEAN
     }, {
         sequelize,
