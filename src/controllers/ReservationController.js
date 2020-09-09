@@ -1,10 +1,8 @@
-const { reservation, reservation_time } = require('../app/models');
-
-const Sequelize = require('sequelize')
+const { reservation, reservation_time, sequelize } = require('../app/models');
 
 module.exports = {
     async index(req, res) {
-        const reservations = await reservation.findAll();
+        const reservations = await reservation.findAll({ include: [ reservation_time ] });
         return res.status(200).json(reservations);
     },
 
@@ -20,24 +18,40 @@ module.exports = {
     },
 
     async store(req, res) {
-        const transaction = Sequelize.Transaction();
+        const transaction = await sequelize.transaction();
         try {
-            const { date, note, time } = req.body;
+            const { date, note, id_time } = req.body;
+            const id_user = req.res.userId;
 
             const reservations = await reservation.findAll({ 
                 where: { date },
-                include: [ reservation_time ] 
+                include: [{
+                    model: reservation_time,
+                    required: true,
+                    where: { id_time }
+                }] 
             });
 
             if(reservations.length > 0){
-                return res.status(404).json({ error: `Esta ` });
+                return res.status(404).json({ error: `Esta data e horário ja encontra-se reservados. Por favor selecione outro horário.` });
             }
 
-            const _reservation = await reservation.create(req.body,{ transaction });
+            const _reservation = await reservation.create({
+                id_user, date, note
+            },{ transaction });
 
+            const _reservation_time = await reservation_time.create({
+                id_reservation: _reservation.id, 
+                id_time
+            },{ transaction });
+
+            var reservation_created = {
+                ..._reservation.toJSON(),
+                reservation_time: _reservation_time
+            };
             
             transaction.commit();
-            return res.status(201).json(_reservation);
+            return res.status(201).json(reservation_created);
         } catch (error) {
             transaction.rollback();
             return res.status(404).json({ error: `Erro ao cadastrar reserva. Erro: ${error}` });

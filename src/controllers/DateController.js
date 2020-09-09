@@ -67,7 +67,7 @@ module.exports = {
         times_busy.map(time_ => {
             var time_formated = moment(time_.time.time, ['HH:mm']).format('hh:mm A');
             new_times_busy.push({
-                id: time_.id,
+                id: time_.time.id,
                 name: time_formated,
             });
         });

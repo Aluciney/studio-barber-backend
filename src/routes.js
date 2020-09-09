@@ -11,6 +11,7 @@ const ServiceController = require('./controllers/ServiceController');
 const CategoryController = require('./controllers/CategoryController');
 const ReservationController = require('./controllers/ReservationController');
 const TimeController = require('./controllers/TimeController');
+const DateDisabledController = require('./controllers/DateDisabledController');
 const DateController = require('./controllers/DateController');
 
 // AUTHENTICATION
@@ -26,40 +27,47 @@ routes.put('/users/:id', upload.single('avatar_url'), UserController.update);
 routes.delete('/users/:id', UserController.destroy);
 
 // SERVICE
-routes.post('/services', upload.single('image_url'), ServiceController.store);
-
 routes.use('/services', [ authMiddleware ]); // MIDDLEWARE
+
 routes.get('/services', ServiceController.index);
 routes.get('/services/:id', ServiceController.show);
+routes.post('/services', upload.single('image_url'), ServiceController.store);
 routes.put('/services/:id', ServiceController.update);
 routes.delete('/services/:id', ServiceController.destroy);
 
 // CATEGORY
-routes.post('/categories', CategoryController.store);
-
 routes.use('/categories', [ authMiddleware ]); // MIDDLEWARE
+
 routes.get('/categories', CategoryController.index);
 routes.get('/categories/:id', CategoryController.show);
+routes.post('/categories', CategoryController.store);
 routes.put('/categories/:id', CategoryController.update);
 routes.delete('/categories/:id', CategoryController.destroy);
 
 // CATEGORY
-routes.post('/reservations', ReservationController.store);
-
 routes.use('/reservations', [ authMiddleware ]); // MIDDLEWARE
+
 routes.get('/reservations', ReservationController.index);
 routes.get('/reservations/:id', ReservationController.show);
+routes.post('/reservations', ReservationController.store);
 routes.put('/reservations/:id', ReservationController.update);
 routes.delete('/reservations/:id', ReservationController.destroy);
 
 // TIME
-routes.post('/times', TimeController.store);
-
 routes.use('/times', [ authMiddleware ]); // MIDDLEWARE
+
 routes.get('/times', TimeController.index);
 routes.get('/times/:id', TimeController.show);
+routes.post('/times', TimeController.store);
 routes.put('/times/:id', TimeController.update);
 routes.delete('/times/:id', TimeController.destroy);
+
+// DATE_DISABLED
+routes.use('/dates_disabled', [ authMiddleware ]); // MIDDLEWARE
+
+routes.get('/dates_disabled', DateDisabledController.index);
+routes.post('/dates_disabled', DateDisabledController.store);
+routes.delete('/dates_disabled/:id', DateDisabledController.destroy);
 
 // DATE
 routes.use('/dates', [ authMiddleware ]); // MIDDLEWARE
