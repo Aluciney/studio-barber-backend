@@ -1,4 +1,4 @@
-const { reservation, reservation_time, sequelize } = require('../app/models');
+const { reservation, reservation_time, time, sequelize } = require('../app/models');
 
 module.exports = {
     async index(req, res) {
@@ -45,9 +45,11 @@ module.exports = {
                 id_time
             },{ transaction });
 
+            const time_ = await time.findByPk(id_time,{ transaction });
+
             var reservation_created = {
                 ..._reservation.toJSON(),
-                reservation_time: _reservation_time
+                time: time_
             };
             
             transaction.commit();

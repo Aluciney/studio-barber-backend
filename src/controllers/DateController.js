@@ -10,7 +10,7 @@ module.exports = {
             new_dates_disabled[date_disabled.date] = {disabled: true, disableTouchEvent: true};
         });
 
-        var min = moment().startOf('month').format('YYYY-MM-DD');
+        var min = moment(new Date()).format('YYYY-MM-DD');
         var max = moment().endOf('month').format('YYYY-MM-DD');
 
         const data = {
@@ -26,6 +26,8 @@ module.exports = {
 
     async getTimes(req, res) {
         const { date_selected } = req.params;
+
+        const date_now = moment(new Date()).format('YYYY-MM-DD');
 
         const times = await time.findAll();
 
@@ -57,6 +59,18 @@ module.exports = {
                 id: time_.id,
                 name: time_formated,
             });
+            if(date_now === date_selected ){
+                var time_now = moment(new Date(), ['HH:mm']).add(1, 'hour').format('HHmm');
+                var time_compare = moment(time_.time, ['HH:mm']).format('HHmm');
+    
+                if(time_now > time_compare){
+                    var time_formated = moment(time_.time, ['HH:mm']).format('hh:mm A');
+                    new_times_busy.push({
+                        id: time_.id,
+                        name: time_formated,
+                    });
+                }
+            }
         });
 
         times_disabled.map(time_ => {
