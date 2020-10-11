@@ -5,8 +5,8 @@ const {
 module.exports = (sequelize, DataTypes) => {
     class Reservation extends Model {
         static associate(models) {
-            models.reservation.hasMany(models.reservation_time,
-                { foreignKey: 'id_reservation' }
+            models.reservation.hasMany(models.reservation_service_time,
+                { foreignKey: 'id_reservation', }
             );
         }
     };

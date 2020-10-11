@@ -8,7 +8,6 @@ const upload = multer(multerConfig);
 const AuthenticationController = require('./controllers/AuthenticationController');
 const UserController = require('./controllers/UserController');
 const ServiceController = require('./controllers/ServiceController');
-const CategoryController = require('./controllers/CategoryController');
 const ReservationController = require('./controllers/ReservationController');
 const TimeController = require('./controllers/TimeController');
 const DateDisabledController = require('./controllers/DateDisabledController');
@@ -35,16 +34,7 @@ routes.post('/services', upload.single('image_url'), ServiceController.store);
 routes.put('/services/:id', ServiceController.update);
 routes.delete('/services/:id', ServiceController.destroy);
 
-// CATEGORY
-routes.use('/categories', [ authMiddleware ]); // MIDDLEWARE
-
-routes.get('/categories', CategoryController.index);
-routes.get('/categories/:id', CategoryController.show);
-routes.post('/categories', CategoryController.store);
-routes.put('/categories/:id', CategoryController.update);
-routes.delete('/categories/:id', CategoryController.destroy);
-
-// CATEGORY
+// RESERVATION
 routes.use('/reservations', [ authMiddleware ]); // MIDDLEWARE
 
 routes.get('/reservations', ReservationController.index);

@@ -16,6 +16,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING
             },
+            value: {
+                allowNull: false,
+                type: Sequelize.DECIMAL(10,2)
+            },
             active: {
                 allowNull: false,
                 type: Sequelize.BOOLEAN,

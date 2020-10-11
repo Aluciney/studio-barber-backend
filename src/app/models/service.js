@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     Service.init({
         name: DataTypes.STRING(50),
         image_url: DataTypes.STRING,
+        value: DataTypes.DECIMAL(10,2),
         active: DataTypes.BOOLEAN
     }, {
         sequelize,

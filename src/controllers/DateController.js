@@ -1,4 +1,4 @@
-const { time, reservation, time_date_disabled, date_disabled, reservation_time } = require('../app/models');
+const { time, reservation, time_date_disabled, date_disabled, reservation_service_time } = require('../app/models');
 
 const moment = require('moment');
 
@@ -36,7 +36,7 @@ module.exports = {
             include: [ time ]
         });
 
-        const times_busy = await reservation_time.findAll({ 
+        const times_busy = await reservation_service_time.findAll({ 
             include: [ 
                 {
                     model: reservation,

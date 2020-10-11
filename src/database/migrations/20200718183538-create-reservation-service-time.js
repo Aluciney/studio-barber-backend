@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('reservation_time', {
+        await queryInterface.createTable('reservation_service_time', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -15,6 +15,16 @@ module.exports = {
                 onDelete: 'CASCADE',
                 references: {
                     model: 'reservation',
+                    key: 'id',
+                }
+            },
+            id_service: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'service',
                     key: 'id',
                 }
             },
@@ -39,6 +49,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('reservation_time');
+        await queryInterface.dropTable('reservation_service_time');
     }
 };
