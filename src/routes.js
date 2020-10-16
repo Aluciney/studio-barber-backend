@@ -15,6 +15,7 @@ const DateController = require('./controllers/DateController');
 
 // AUTHENTICATION
 routes.post('/authentication/login', AuthenticationController.login);
+routes.post('/authentication/login/google', AuthenticationController.login_google);
 
 // USER
 routes.post('/users', UserController.store);
